@@ -36,14 +36,15 @@ namespace SYNCHRONIZATOR
             if (!double.TryParse(w1TextBox.Text, out w1)) return;
             if (!double.TryParse(dTextBox.Text, out d)) return;
 
-            delta = 0.09;
+            double E = 0.001;
+            delta = 2 * d - E;
             w2 = w1 + delta;
             label4.Text = $"ω₂={w2.ToString()}";
 
             RungeKuttaFehlbergIntegrator rkf45 = new RungeKuttaFehlbergIntegrator();
 
             rkf45.InitialTime = 0.0;
-            rkf45.InitialValue = Vector.Create(1.0, 0.0);
+            rkf45.InitialValue = Vector.Create(0.0, 0.0);
             rkf45.DifferentialFunction = TwoDifEqSystem;
             rkf45.AbsoluteTolerance = 1e-8;
 
