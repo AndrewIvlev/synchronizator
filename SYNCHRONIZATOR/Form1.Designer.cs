@@ -28,12 +28,16 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.plotView1 = new OxyPlot.WindowsForms.PlotView();
             this.label1 = new System.Windows.Forms.Label();
             this.w1TextBox = new System.Windows.Forms.TextBox();
             this.trySync = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.dTextBox = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.tTextBox = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // plotView1
@@ -96,17 +100,48 @@
             this.dTextBox.Size = new System.Drawing.Size(39, 20);
             this.dTextBox.TabIndex = 5;
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(212, 330);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(73, 29);
+            this.label3.TabIndex = 6;
+            this.label3.Text = "time=";
+            // 
+            // tTextBox
+            // 
+            this.tTextBox.Location = new System.Drawing.Point(280, 336);
+            this.tTextBox.Name = "tTextBox";
+            this.tTextBox.Size = new System.Drawing.Size(54, 20);
+            this.tTextBox.TabIndex = 7;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label4.Location = new System.Drawing.Point(340, 330);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(51, 29);
+            this.label4.TabIndex = 8;
+            this.label4.Text = "ω₂=";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 361);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.tTextBox);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.dTextBox);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.trySync);
             this.Controls.Add(this.w1TextBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.plotView1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MinimumSize = new System.Drawing.Size(600, 400);
             this.Name = "Form1";
             this.Text = "SYNCHRONIZATOR";
@@ -123,6 +158,9 @@
         private System.Windows.Forms.Button trySync;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox dTextBox;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox tTextBox;
+        private System.Windows.Forms.Label label4;
     }
 }
 
