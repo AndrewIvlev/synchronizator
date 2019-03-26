@@ -5,6 +5,7 @@ using Extreme.Mathematics;
 using Extreme.Mathematics.Calculus.OrdinaryDifferentialEquations;
 
 using OxyPlot;
+using OxyPlot.Axes;
 using OxyPlot.Series;
 
 namespace SYNCHRONIZATOR
@@ -21,10 +22,12 @@ namespace SYNCHRONIZATOR
         {
             InitializeComponent();
 
-            fi1LineSeries = new LineSeries { Color = OxyColors.Blue };
-            fi2LineSeries = new LineSeries { Color = OxyColors.Red };
+            fi1LineSeries = new LineSeries { Color = OxyColors.Blue, Title = "φ₁" };
+            fi2LineSeries = new LineSeries { Color = OxyColors.Red, Title = "φ₂" };
 
             myModel = new PlotModel { Title = "synchronization" };
+            myModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "t"});
+            myModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "φ₁,φ₂" });
         }
 
         private void trySync_Click(object sender, EventArgs e)
@@ -33,9 +36,9 @@ namespace SYNCHRONIZATOR
             if (!double.TryParse(w1TextBox.Text, out w1)) return;
             if (!double.TryParse(dTextBox.Text, out d)) return;
 
-            delta = 0.5;
+            delta = 0.09;
             w2 = w1 + delta;
-            label4.Text = w2.ToString();
+            label4.Text = $"ω₂={w2.ToString()}";
 
             RungeKuttaFehlbergIntegrator rkf45 = new RungeKuttaFehlbergIntegrator();
 
