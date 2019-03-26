@@ -13,8 +13,8 @@ namespace SYNCHRONIZATOR
     public partial class Form1 : Form
     {
         PlotModel myModel;
-        LineSeries fi1LineSeries;
-        LineSeries fi2LineSeries;
+        LineSeries phi1LineSeries;
+        LineSeries phi2LineSeries;
 
         public static double w1, w2, d, delta, time;
 
@@ -22,12 +22,12 @@ namespace SYNCHRONIZATOR
         {
             InitializeComponent();
 
-            fi1LineSeries = new LineSeries { Color = OxyColors.Blue, Title = "φ₁" };
-            fi2LineSeries = new LineSeries { Color = OxyColors.Red, Title = "φ₂" };
-
             myModel = new PlotModel { Title = "synchronization" };
             myModel.Axes.Add(new LinearAxis { Position = AxisPosition.Bottom, Title = "t"});
             myModel.Axes.Add(new LinearAxis { Position = AxisPosition.Left, Title = "φ₁,φ₂" });
+
+            phi1LineSeries = new LineSeries { Color = OxyColors.Blue, Title = "φ₁" };
+            phi2LineSeries = new LineSeries { Color = OxyColors.Red, Title = "φ₂" };
         }
 
         private void trySync_Click(object sender, EventArgs e)
@@ -48,8 +48,8 @@ namespace SYNCHRONIZATOR
             rkf45.DifferentialFunction = TwoDifEqSystem;
             rkf45.AbsoluteTolerance = 1e-8;
 
-            fi1LineSeries.Points.Clear();
-            fi2LineSeries.Points.Clear();
+            phi1LineSeries.Points.Clear();
+            phi2LineSeries.Points.Clear();
 
             Console.WriteLine("Classic 4/5th order Runge-Kutta-Fehlberg");
             for (int t = 0; t <= time; t++)
@@ -57,28 +57,38 @@ namespace SYNCHRONIZATOR
                 var y = rkf45.Integrate(t);
                 Console.WriteLine("{0:F2}: {1,20:F14} ({2} steps)", t, y, rkf45.IterationsNeeded);
 
-                fi1LineSeries.Points.Add(new DataPoint(t, y[0]));
-                fi2LineSeries.Points.Add(new DataPoint(t, y[1]));
+                phi1LineSeries.Points.Add(new DataPoint(t, y[0]));
+                phi2LineSeries.Points.Add(new DataPoint(t, y[1]));
             }
 
             myModel.Series.Clear();
-            myModel.Series.Add(fi1LineSeries);
-            myModel.Series.Add(fi2LineSeries);
+            myModel.Series.Add(phi1LineSeries);
+            myModel.Series.Add(phi2LineSeries);
 
             this.plotView1.Model = myModel;
             this.plotView1.Refresh();
             this.plotView1.Show();
         }
 
-        private static Vector<double> TwoDifEqSystem(double t, Vector<double> fi, Vector<double> dfi)
+        private static Vector<double> TwoDifEqSystem(double t, Vector<double> phi, Vector<double> dphi)
         {
-            if (dfi == null)
-                dfi = Vector.Create<double>(2);
+            if (dphi == null)
+                dphi = Vector.Create<double>(2);
 
-            dfi[0] = w1 + d * Math.Sin(fi[1] - fi[0]);
-            dfi[1] = w2 + d * Math.Sin(fi[0] - fi[1]);
+            dphi[0] = w1 + d * Math.Sin(phi[1] - phi[0]);
+            dphi[1] = w2 + d * Math.Sin(phi[0] - phi[1]);
 
-            return dfi;
+            return dphi;
+        }
+
+        private static Vector<double> OneDifur(double t, Vector<double> psi, Vector<double> dpsi)
+        {
+            if (dpsi == null)
+                dpsi = Vector.Create<double>(1);
+
+            dpsi[0] = delta - d * Math.Sin(psi[0])/* + A * Math.Cos(omega * t)*/;
+
+            return dpsi;
         }
     }
 }
